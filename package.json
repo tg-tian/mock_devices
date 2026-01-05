@@ -1,0 +1,18 @@
+{
+  "name": "mock_devices",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "thermometer": "ts-node src/thermometer.ts",
+    "ac": "ts-node src/ac.ts",
+    "build": "tsc"
+  },
+  "dependencies": {
+    "mqtt": "^5.14.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.19.26",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
+  }
+}
