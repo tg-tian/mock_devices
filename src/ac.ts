@@ -1,5 +1,5 @@
 import mqtt from 'mqtt'
-import { propertiesTopic, configTopic, commandsTopic } from './lib/topics'
+import { propertiesTopic, configTopic, commandsTopic, eventsTopic } from './lib/topics'
 import { DeviceConfig } from './types/device'
 
 const deviceId = 'ac001'
@@ -7,9 +7,10 @@ const client = mqtt.connect('mqtt://127.0.0.1:1883')
 
 let currentTemp = 25
 let targetTemp = 24
-let hvacMode = 'auto'
+let hvacMode = 4
 
 let ticker: NodeJS.Timeout | undefined
+let eventTicker: NodeJS.Timeout | undefined
 
 
 const config: DeviceConfig = {
@@ -24,13 +25,54 @@ const config: DeviceConfig = {
     hvac_mode: { type: 'string', readOnly: false }
   },
   events: {
-    lowBattery: { level: 'warning' }
+    sys_error: { level: 'error', fields: { code: { type: 'string' }, msg: { type: 'string' } } },
+    filter_warn: { level: 'warning', fields: { op_hours: { type: 'number' } } },
+    comp_status: { level: 'info', fields: { val: { type: 'integer' } } }
   },
   actions: {
     reset: { arguments: [] }
   },
   tags: { room: 'living-room' }
 }
+
+function reportEvent() {
+  const eventTypes = ['sys_error', 'filter_warn', 'comp_status']
+  const type = eventTypes[Math.floor(Math.random() * eventTypes.length)]
+  
+  let data: any = {}
+  switch (type) {
+    case 'sys_error':
+      const codes = ['E01', 'E02', 'E03']
+      data = {
+        code: codes[Math.floor(Math.random() * codes.length)],
+        msg: 'Sensor malfunction'
+      }
+      break
+    case 'filter_warn':
+      data = {
+        op_hours: Math.floor(Math.random() * 500) + 100
+      }
+      break
+    case 'comp_status':
+      // 0: off, 1: on, 2: defrosting
+      const values = [0, 1, 2]
+      data = {
+        val: values[Math.floor(Math.random() * values.length)]
+      }
+      break
+  }
+
+  const payload = {
+    [type]: {
+      ...data,
+      timestamp: Date.now()
+    }
+  }
+  
+  client.publish(eventsTopic(deviceId), JSON.stringify(payload))
+  console.log(`🔔 事件上报 -> 主题:${eventsTopic(deviceId)} | 载荷:${JSON.stringify(payload)}`)
+}
+
 
 function publishState() {
   const steps = [-1, -0.5, 0, 0.5, 1]
@@ -54,7 +96,9 @@ client.on('connect', () => {
   client.subscribe(commandsTopic(deviceId))
   console.log(`📩 订阅命令 -> 主题:${commandsTopic(deviceId)}`)
   ticker = setInterval(() => {publishState()}, 3000)
+  eventTicker = setInterval(() => {reportEvent()}, 4000)
   publishState()
+  reportEvent()
 })
 
 client.on('message', (topic, message) => {
@@ -78,6 +122,7 @@ client.on('message', (topic, message) => {
 
 process.on('SIGINT', () => {
   if (ticker) clearInterval(ticker)
+  if (eventTicker) clearInterval(eventTicker)
   client.end()
   process.exit(0)
 })

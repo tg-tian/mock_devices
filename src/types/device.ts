@@ -13,8 +13,8 @@ export interface DeviceConfig {
   model: string
   category: string
   properties: Record<string, DeviceProperty>
-  events: Record<string, { level: string }>
-  actions: Record<string, { arguments: any[] }>
+  events: Record<string, any>
+  actions: Record<string, any>
   tags?: Record<string, string>
 }
 
