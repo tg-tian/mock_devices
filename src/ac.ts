@@ -107,10 +107,10 @@ client.on('message', (topic, message) => {
       const payload = JSON.parse(message.toString())
       console.log(`📥 收到命令: ${JSON.stringify(payload)}`)
       
-      if (payload.action === 'setMode' && payload.args && payload.args.mode) {
+      if (payload.action === 'setMode' && payload.args && payload.args.mode !== undefined) {
         hvacMode = payload.args.mode
         publishState()
-      } else if (payload.action === 'setTemperature' && payload.args && payload.args.temp) {
+      } else if (payload.action === 'setTemperature' && payload.args && payload.args.temp !== undefined) {
         targetTemp = payload.args.temp
         publishState()
       }
