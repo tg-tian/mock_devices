@@ -5,6 +5,7 @@
   "scripts": {
     "thermometer": "ts-node src/thermometer.ts",
     "ac": "ts-node src/ac.ts",
+    "coffee": "ts-node src/coffee.ts",
     "build": "tsc"
   },
   "dependencies": {

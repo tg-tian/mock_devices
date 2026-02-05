@@ -4,6 +4,8 @@ export interface DeviceProperty {
   type: PropertyType
   unit?: string
   readOnly: boolean
+  enumValues?: any[]
+  description?: string
 }
 
 export interface DeviceConfig {
