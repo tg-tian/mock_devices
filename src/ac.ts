@@ -27,10 +27,10 @@ const config: DeviceConfig = {
   events: {
     sys_error: { level: 'error', fields: { code: { type: 'string' }, msg: { type: 'string' } } },
     filter_warn: { level: 'warning', fields: { op_hours: { type: 'number' } } },
-    comp_status: { level: 'info', fields: { val: { type: 'integer' } } }
+    comp_status: { level: 'info', fields: { val: { type: 'number' } } }
   },
   actions: {
-    reset: { arguments: [] }
+    reset: { arguments: {} }
   },
   tags: { room: 'living-room' }
 }

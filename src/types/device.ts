@@ -3,9 +3,21 @@ export type PropertyType = 'number' | 'string' | 'boolean'
 export interface DeviceProperty {
   type: PropertyType
   unit?: string
-  readOnly: boolean
+  readOnly?: boolean
   enumValues?: any[]
   description?: string
+}
+
+export interface DeviceEvent {
+  fields?: Record<string, DeviceProperty>;
+  level?: "info" | "warning" | "error";
+  description?: string;
+  timestamp?: string;
+}
+
+export interface DeviceAction {
+  arguments?: Record<string, DeviceProperty>;
+  description?: string;
 }
 
 export interface DeviceConfig {
@@ -15,12 +27,7 @@ export interface DeviceConfig {
   model: string
   category: string
   properties: Record<string, DeviceProperty>
-  events: Record<string, any>
-  actions: Record<string, any>
+  events: Record<string, DeviceEvent>
+  actions: Record<string, DeviceAction>
   tags?: Record<string, string>
-}
-
-export interface DeviceCommand {
-  action: string
-  arguments?: any
 }
