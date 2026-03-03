@@ -24,7 +24,7 @@ export interface DeviceConfig {
   deviceId: string
   deviceName: string
   provider?: string
-  model: string
+  deviceModel: string
   category: string
   properties: Record<string, DeviceProperty>
   events: Record<string, DeviceEvent>

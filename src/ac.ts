@@ -17,7 +17,7 @@ const config: DeviceConfig = {
   deviceId : deviceId,
   deviceName: '海尔空调1001',
   provider: 'mqtt',
-  model: 'HAIER-AC-1001',
+  deviceModel: 'HAIER-AC-1001',
   category: 'ac',
   properties: {
     current_temperature: { type: 'number', unit: '°C', readOnly: true },

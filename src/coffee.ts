@@ -23,7 +23,7 @@ const config: DeviceConfig = {
   deviceId: deviceId,
   deviceName: '德龙咖啡机2001',
   provider: 'mqtt',
-  model: 'DELONGHI-CF-2001',
+  deviceModel: 'DELONGHI-CF-2001',
   category: 'coffee_machine',
   properties: {
     water_temperature: { type: 'number', unit: '°C', readOnly: true },

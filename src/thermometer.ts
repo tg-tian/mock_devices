@@ -11,7 +11,7 @@ const config: DeviceConfig = {
   deviceId,
   deviceName: '温度计S01',
   provider: 'mqtt',
-  model: 'MI-THERMO-S01',
+  deviceModel: 'MI-THERMO-S01',
   category: 'thermometer',
   properties: {
     temperature: { type: 'number', unit: '°C', readOnly: true }
