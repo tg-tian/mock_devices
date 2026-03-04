@@ -56,36 +56,6 @@ const config: DeviceConfig = {
   tags: { room: 'kitchen' }
 }
 
-function reportEvent() {
-  const eventTypes = ['sys_error', 'water_low']
-  const type = eventTypes[Math.floor(Math.random() * eventTypes.length)]
-
-  let data: any = {}
-  switch (type) {
-    case 'sys_error':
-      const codes = ['E10', 'E11', 'E12']
-      data = {
-        code: codes[Math.floor(Math.random() * codes.length)],
-        msg: '水泵异常'
-      }
-      break
-    case 'water_low':
-      data = {
-        level: Math.floor(Math.random() * 15) + 1
-      }
-      break
-  }
-
-  const payload = {
-    [type]: {
-      ...data,
-      timestamp: Date.now()
-    }
-  }
-
-  client.publish(eventsTopic(deviceId), JSON.stringify(payload))
-  console.log(`🔔 事件上报 -> 主题:${eventsTopic(deviceId)} | 载荷:${JSON.stringify(payload)}`)
-}
 
 function reportCoffeeComplete(coffeeType: string, duration: number, startTime: string) {
   const payload = {
@@ -144,7 +114,6 @@ client.on('connect', () => {
   client.subscribe(commandsTopic(deviceId))
   console.log(`📩 订阅命令 -> 主题:${commandsTopic(deviceId)}`)
   ticker = setInterval(() => { publishState() }, 3000)
-  eventTicker = setInterval(() => { reportEvent() }, 10000)
   publishState()
 })
 
