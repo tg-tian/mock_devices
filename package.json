@@ -6,6 +6,7 @@
     "thermometer": "ts-node src/thermometer.ts",
     "ac": "ts-node src/ac.ts",
     "coffee": "ts-node src/coffee.ts",
+    "robot": "ts-node src/robot.ts",
     "build": "tsc"
   },
   "dependencies": {
