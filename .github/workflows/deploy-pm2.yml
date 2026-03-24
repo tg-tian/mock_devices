@@ -3,7 +3,6 @@ name: Deploy PM2
 on:
   push:
     branches:
-      - main
       - master
   workflow_dispatch:
 
@@ -18,5 +17,8 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           password: ${{ secrets.SSH_PASSWORD }}
           script: |
+            set -e
             cd /root/mte-mock-devices
+            if [ -s "$HOME/.nvm/nvm.sh" ]; then . "$HOME/.nvm/nvm.sh"; fi
+            export PATH="$PATH:/usr/local/bin:/usr/bin:/bin"
             pm2 startOrReload ecosystem.config.js --update-env
