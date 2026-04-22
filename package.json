@@ -7,6 +7,7 @@
     "ac": "ts-node src/ac.ts",
     "coffee": "ts-node src/coffee.ts",
     "robot": "ts-node src/robot.ts",
+    "camera": "ts-node src/camera.ts",
     "build": "tsc"
   },
   "dependencies": {
