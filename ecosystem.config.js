@@ -55,6 +55,20 @@ module.exports = {
             error_file: '/root/logs/mock-robot-error.log',
             out_file: '/root/logs/mock-robot-out.log',
             time: true
+        },
+        {
+            name: 'mock-camera',
+            cwd: '/root/mte-mock-devices',
+            script: 'node_modules/.bin/ts-node',
+            args: 'src/camera.ts',
+            instances: 1,
+            autorestart: true,
+            watch: false,
+            max_memory_restart: '256M',
+            env: { NODE_ENV: 'development' },
+            error_file: '/root/logs/mock-camera-error.log',
+            out_file: '/root/logs/mock-camera-out.log',
+            time: true
         }
     ]
 };

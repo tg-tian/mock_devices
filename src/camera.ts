@@ -108,7 +108,7 @@ client.on('connect', () => {
   console.log(`📩 订阅命令 -> 主题:${commandsTopic(deviceId)}`)
 
   ticker = setInterval(() => publishState(), 3000)
-  eventTicker = setInterval(() => reportEvent(), 5000)
+  
 
   publishState()
   reportEvent()
